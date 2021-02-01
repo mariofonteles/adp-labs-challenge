@@ -1,4 +1,4 @@
-# ADP Challenge
+# ADP Labs Challenge
 
 This is a challenge for a position at ADP Labs.
 
