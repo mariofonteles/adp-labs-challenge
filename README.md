@@ -29,6 +29,8 @@ To run ESlint, run the following command:
 ```
  npm run lint
 ```
+
+Optionally, you can also use the `ESlint` plugin in VSCode to auto-fix the errors.
 ### Running tests
 
 To run the tests with Mocha, simply run this command:
