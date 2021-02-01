@@ -1,41 +1,54 @@
-var http = require('http');
-var router = require('../router');
-var axios = require('axios');
+const axios = require('axios');
+const chalk = require('chalk');
 
 module.exports = {
-    async performOperation() {
-        let res = await axios.get('https://interview.adpeai.com/api/v1/get-task');
-        console.log(res.data);
-        this.res.writeHead(200, { 'Content-Type': 'text/plain' });
-        let result = 0;
-
-        switch(res.data.operation) {
-            case 'subtraction':
-                result = res.data.left - res.data.right;
-                break;
-            case 'addition': 
-                result = res.data.left + res.data.right;
-                break;
-            case 'remainder':
-                result = res.data.left % res.data.right;
-                break;
-            case 'multiplication': 
-                result = res.data.left * res.data.right;
-                break;
-            case 'exponentiation':
-                result = res.data.left ** res.data.right;
-                break;
-            case 'division':
-                result = res.data.left / res.data.right;
-                break;
-        }
-        let submitRes = await axios.post('https://interview.adpeai.com/api/v1/submit-task', 
-                                {id: res.data.id, result: result});
-        console.log(submitRes.satus)
-        this.res.end('object consists of id:' + res.data.id + ' and operation is ' + res.data.operation + ' and result was ' + result + ' and POST status was '+ submitRes.status);
-    },
-
-    submitOperation() {
-
+  async performOperation() {
+    const res = await axios.get('https://interview.adpeai.com/api/v1/get-task');
+    let result = 0;
+    switch (res.data.operation) {
+      case 'subtraction':
+        result = res.data.left - res.data.right;
+        break;
+      case 'addition':
+        result = res.data.left + res.data.right;
+        break;
+      case 'remainder':
+        result = res.data.left % res.data.right;
+        break;
+      case 'multiplication':
+        result = res.data.left * res.data.right;
+        break;
+      case 'exponentiation':
+        result = res.data.left ** res.data.right;
+        break;
+      case 'division':
+        result = res.data.left / res.data.right;
+        break;
+      default:
+        break;
     }
-}
+    const response = {
+      operationId: res.data.id,
+      operationName: res.data.operation,
+      leftOp: res.data.left,
+      rightOp: res.data.right,
+      result,
+    };
+    this.res.statusCode = 200;
+    this.res.end(JSON.stringify(response));
+  },
+
+  async submitOperation() {
+    try {
+      const submitRes = await axios.post('https://interview.adpeai.com/api/v1/submit-task',
+        { id: this.req.body.id, result: Number(this.req.body.result) });
+      console.log(chalk.green(`Request success with status ${submitRes.status}`));
+      this.res.statusCode = 200;
+      this.res.end();
+    } catch (err) {
+      console.log(chalk.red(`ERROR ${err.response.status}: ${err.response.data}`));
+      this.res.statusCode = err.response.status;
+      this.res.end(JSON.stringify({ errorMessage: err.response.data }));
+    }
+  },
+};

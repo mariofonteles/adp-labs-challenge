@@ -1,0 +1,25 @@
+body {
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #f5f5f5;
+    text-align: center;
+}
+
+.form-main {
+    max-width: 400px;
+    margin: auto;
+}
+
+.btn-operation {
+    width: 100%;
+}
+
+.success {
+    color: green;
+}
+
+.error {
+    color: red;
+}
