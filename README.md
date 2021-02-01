@@ -18,7 +18,7 @@ This is a challenge for a position at ADP Labs.
 
 After cloning the repo, open the root folder and install all dependencies and devDependencies, then start the NodeJS and Webpack servers.
 ```
- cd adp-challenge
+ cd adp-labs-challenge
  npm install -D
  npm run start
 ```
