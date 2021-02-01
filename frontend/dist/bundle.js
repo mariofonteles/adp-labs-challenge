@@ -43,7 +43,8 @@ var getOperation = function getOperation() {
         opRight = _document$querySelect2[1],
         opName = _document$querySelect2[2],
         opId = _document$querySelect2[3],
-        opResult = _document$querySelect2[4];
+        opResult = _document$querySelect2[4]; // setting values to show in input fields
+
 
     opLeft.value = response.data.leftOp;
     opRight.value = response.data.rightOp;
@@ -56,6 +57,7 @@ var getOperation = function getOperation() {
   });
 };
 var postOperation = function postOperation() {
+  // resets messages
   successMessage.style.display = 'none';
   errorMessage.style.display = 'none';
   axios__WEBPACK_IMPORTED_MODULE_1___default().post('http://localhost:8000/task', {

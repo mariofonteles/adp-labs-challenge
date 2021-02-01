@@ -13,6 +13,7 @@ const errorMessage = document.querySelector('.error');
 export const getOperation = () => {
   axios.get('http://localhost:8000/task', baseHeaders).then((response) => {
     const [opLeft, opRight, opName, opId, opResult] = document.querySelectorAll('.form-control');
+    // setting values to show in input fields
     opLeft.value = response.data.leftOp;
     opRight.value = response.data.rightOp;
     opName.value = response.data.operationName;
@@ -25,6 +26,7 @@ export const getOperation = () => {
 };
 
 export const postOperation = () => {
+  // resets messages
   successMessage.style.display = 'none';
   errorMessage.style.display = 'none';
 
